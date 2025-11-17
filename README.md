@@ -190,6 +190,59 @@ Currently uses in-memory storage. To add a database:
 1. Implement a new class following the `ReviewStorage` interface
 2. Replace the storage instance in `packages/backend/src/index.ts`
 
+## Deployment
+
+### Deploy to Vercel
+
+This project is configured for deployment on Vercel with separate frontend and backend deployments.
+
+#### Frontend Deployment
+
+1. Push your code to GitHub
+2. Go to [Vercel Dashboard](https://vercel.com/new)
+3. Import your GitHub repository
+4. Set **Root Directory** to `packages/frontend`
+5. Framework Preset: Next.js (auto-detected)
+6. Set environment variable:
+   - `NEXT_PUBLIC_API_URL` = your backend URL (e.g., `https://your-backend.vercel.app`)
+7. Click **Deploy**
+
+#### Backend Deployment
+
+1. Go to [Vercel Dashboard](https://vercel.com/new)
+2. Import your GitHub repository again
+3. Set **Root Directory** to `packages/backend`
+4. Set environment variable:
+   - `GROQ_API_KEY` = your Groq API key
+5. Click **Deploy**
+
+After both deployments:
+1. Update the frontend's `NEXT_PUBLIC_API_URL` to point to your backend URL
+2. Redeploy the frontend
+
+### Alternative: Deploy Backend to Railway/Render
+
+For long-running backend processes, you can deploy the backend to Railway or Render instead:
+
+**Railway:**
+```bash
+# Install Railway CLI
+npm install -g @railway/cli
+
+# Login and deploy
+railway login
+railway init
+railway up
+```
+
+**Render:**
+1. Connect your GitHub repo
+2. Create a new Web Service
+3. Set Root Directory: `packages/backend`
+4. Build Command: `pnpm install && pnpm build`
+5. Start Command: `pnpm start`
+6. Add `GROQ_API_KEY` environment variable
+
 ## Future Enhancements
 
 - [ ] GitHub repository analysis (clone, parse code, generate CodeProfile)
