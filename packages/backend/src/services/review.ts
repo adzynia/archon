@@ -26,7 +26,9 @@ export class ReviewService {
     cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
 
     // Remove common preambles like "Here's the JSON:" or "Here is the response:"
-    cleaned = cleaned.replace(/^(?:Here'?s?\s+(?:the\s+)?(?:JSON|response|architecture|report)[\s:]*)/i, '').trim();
+    cleaned = cleaned
+      .replace(/^(?:Here'?s?\s+(?:the\s+)?(?:JSON|response|architecture|report)[\s:]*)/i, '')
+      .trim();
 
     // Remove markdown code fences if present
     if (cleaned.startsWith('```')) {
@@ -51,28 +53,22 @@ export class ReviewService {
         try {
           // Replace literal newlines, tabs, and other control characters within strings
           // This regex finds strings and replaces control characters inside them
-          const fixed = jsonString.replace(
-            /"([^"\\]*(\\.[^"\\]*)*)"/g,
-            (match) => {
-              // Replace common control characters
-              let cleaned = match
-                .replace(/\n/g, '\\n')
-                .replace(/\r/g, '\\r')
-                .replace(/\t/g, '\\t');
+          const fixed = jsonString.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, match => {
+            // Replace common control characters
+            let cleaned = match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
 
-              // Remove other ASCII control characters (0x00-0x1F and 0x7F)
-              // Using charCodeAt to avoid eslint no-control-regex warning
-              cleaned = cleaned
-                .split('')
-                .filter((char) => {
-                  const code = char.charCodeAt(0);
-                  return code > 31 || code === 9 || code === 10 || code === 13;
-                })
-                .join('');
+            // Remove other ASCII control characters (0x00-0x1F and 0x7F)
+            // Using charCodeAt to avoid eslint no-control-regex warning
+            cleaned = cleaned
+              .split('')
+              .filter(char => {
+                const code = char.charCodeAt(0);
+                return code > 31 || code === 9 || code === 10 || code === 13;
+              })
+              .join('');
 
-              return cleaned;
-            }
-          );
+            return cleaned;
+          });
           return JSON.parse(fixed) as T;
         } catch {
           // If fixing didn't work, throw original error with more context

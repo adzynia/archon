@@ -54,9 +54,7 @@ Microservices-based architecture handling 10,000 requests/day...
           className={styles.textarea}
           disabled={loading}
         />
-        <div className={styles.helpText}>
-          Supports Markdown, PlantUML, and Mermaid diagrams
-        </div>
+        <div className={styles.helpText}>Supports Markdown, PlantUML, and Mermaid diagrams</div>
       </div>
 
       <div className={styles.formGroup}>
@@ -76,9 +74,7 @@ Microservices-based architecture handling 10,000 requests/day...
           <option value="qwen/qwen3-32b">Qwen3 32B (Multilingual)</option>
           <option value="openai/gpt-oss-120b">GPT-OSS 120B (Most Capable)</option>
         </select>
-        <div className={styles.helpText}>
-          Different models have separate rate limits
-        </div>
+        <div className={styles.helpText}>Different models have separate rate limits</div>
       </div>
 
       <div className={styles.formGroup}>
@@ -113,12 +109,7 @@ Microservices-based architecture handling 10,000 requests/day...
           </>
         ) : (
           <>
-            <svg
-              className={styles.icon}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className={styles.icon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

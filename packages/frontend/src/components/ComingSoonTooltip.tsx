@@ -8,10 +8,7 @@ interface ComingSoonTooltipProps {
   message?: string;
 }
 
-export function ComingSoonTooltip({
-  children,
-  message = 'Coming soon',
-}: ComingSoonTooltipProps) {
+export function ComingSoonTooltip({ children, message = 'Coming soon' }: ComingSoonTooltipProps) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
