@@ -51,28 +51,42 @@ export class ReviewService {
       // If parsing fails due to control characters, try to fix them
       if (error instanceof SyntaxError && error.message.includes('control character')) {
         try {
-          // Replace literal newlines, tabs, and other control characters within strings
-          // This regex finds strings and replaces control characters inside them
+          // Replace literal control characters within strings
+          // This regex finds strings and escapes/removes control characters inside them
           const fixed = jsonString.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, match => {
-            // Replace common control characters
-            let cleaned = match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+            // Process character by character to handle control characters
+            let result = '';
+            for (let i = 0; i < match.length; i++) {
+              const char = match[i];
+              const code = char.charCodeAt(0);
 
-            // Remove other ASCII control characters (0x00-0x1F and 0x7F)
-            // Using charCodeAt to avoid eslint no-control-regex warning
-            cleaned = cleaned
-              .split('')
-              .filter(char => {
-                const code = char.charCodeAt(0);
-                return code > 31 || code === 9 || code === 10 || code === 13;
-              })
-              .join('');
-
-            return cleaned;
+              // Keep quotes and already-escaped characters
+              if (char === '"' || (char === '\\' && i + 1 < match.length)) {
+                result += char;
+                if (char === '\\') {
+                  result += match[++i]; // Include the escaped character
+                }
+              }
+              // Escape or remove control characters (0x00-0x1F and 0x7F)
+              else if (code < 32 || code === 127) {
+                if (code === 10)
+                  result += '\\n'; // newline
+                else if (code === 13)
+                  result += '\\r'; // carriage return
+                else if (code === 9) result += '\\t'; // tab
+                // Skip other control characters (0x00-0x08, 0x0B-0x0C, 0x0E-0x1F, 0x7F)
+              } else {
+                result += char;
+              }
+            }
+            return result;
           });
           return JSON.parse(fixed) as T;
-        } catch {
+        } catch (fixError) {
           // If fixing didn't work, throw original error with more context
-          throw new Error(`Failed to parse ${context} from LLM response: ${error}`);
+          throw new Error(
+            `Failed to parse ${context} from LLM response. Original error: ${error}. Fix attempt error: ${fixError}`
+          );
         }
       }
       throw new Error(`Failed to parse ${context} from LLM response: ${error}`);
