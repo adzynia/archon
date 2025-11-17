@@ -2,71 +2,122 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.header {
-  text-align: center;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-.header::before {
+.container::before {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-  opacity: 0.1;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(120, 119, 198, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 90%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.header {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 .logoWrapper {
   position: relative;
   display: inline-flex;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .logo {
-  width: 3rem;
-  height: 3rem;
-  stroke: white;
+  width: 3.5rem;
+  height: 3.5rem;
+  stroke: url(#logoGradient);
   stroke-width: 2;
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
 }
 
 .title {
   position: relative;
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 0.75rem 0;
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-size: 4rem;
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(99, 102, 241, 0.4);
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 0 20px rgba(99, 102, 241, 0.3));
+  }
+  50% {
+    filter: brightness(1.1) drop-shadow(0 0 30px rgba(99, 102, 241, 0.5));
+  }
 }
 
 .subtitle {
   position: relative;
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: 0 0 0.5rem 0;
-  opacity: 0.95;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: #e0e7ff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.01em;
 }
 
 .description {
   position: relative;
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin: 0;
-  opacity: 0.85;
-  max-width: 600px;
+  color: #a5b4fc;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .main {
@@ -75,99 +126,109 @@
   width: 100%;
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .error {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  background: #fef2f2;
-  border: 2px solid #fecaca;
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 16px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 1px 3px 0 rgba(239, 68, 68, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2), 0 0 0 1px rgba(239, 68, 68, 0.1);
 }
 
 .errorIcon {
   flex-shrink: 0;
   width: 2.5rem;
   height: 2.5rem;
-  background: #fee2e2;
+  background: rgba(239, 68, 68, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .errorIcon svg {
   width: 1.5rem;
   height: 1.5rem;
-  color: #dc2626;
+  color: #fca5a5;
   stroke: currentColor;
 }
 
 .errorTitle {
   font-size: 1.125rem;
-  font-weight: 600;
-  color: #991b1b;
+  font-weight: 700;
+  color: #fca5a5;
   margin: 0 0 0.5rem 0;
 }
 
 .errorMessage {
   font-size: 0.9375rem;
-  color: #b91c1c;
+  color: #fca5a5;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
 .footer {
-  background: #1f2937;
-  color: #9ca3af;
-  padding: 2rem;
+  background: linear-gradient(180deg, rgba(15, 20, 25, 0) 0%, rgba(10, 14, 39, 0.8) 100%);
+  color: #6b7280;
+  padding: 3rem 2rem;
   text-align: center;
   margin-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 1;
 }
 
 .footer p {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
 }
 
 .footerLink {
-  color: #60a5fa;
+  color: #818cf8;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .footerLink:hover {
-  color: #93c5fd;
-  text-decoration: underline;
+  color: #a78bfa;
+  text-shadow: 0 0 10px rgba(129, 140, 248, 0.5);
 }
 
 @media (max-width: 768px) {
   .header {
-    padding: 2rem 1rem;
+    padding: 2.5rem 1rem 2rem;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .subtitle {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
 
   .description {
-    font-size: 0.9375rem;
+    font-size: 1rem;
   }
 
   .main {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .footer {
     margin-top: 2rem;
+    padding: 2rem 1rem;
   }
 }
