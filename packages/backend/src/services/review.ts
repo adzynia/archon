@@ -51,6 +51,7 @@ export class ReviewService {
         try {
           // Replace literal newlines, tabs, and other control characters within strings
           // This regex finds strings and replaces control characters inside them
+          // eslint-disable-next-line no-control-regex
           const fixed = jsonString.replace(
             /"([^"\\]*(\\.[^"\\]*)*)"/g,
             (match) => {
@@ -62,7 +63,7 @@ export class ReviewService {
             }
           );
           return JSON.parse(fixed) as T;
-        } catch (fixError) {
+        } catch {
           // If fixing didn't work, throw original error with more context
           throw new Error(`Failed to parse ${context} from LLM response: ${error}`);
         }
