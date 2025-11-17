@@ -12,7 +12,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 export default function Home() {
   const [architectureText, setArchitectureText] = useState('');
   const [repoUrl, setRepoUrl] = useState('');
-  const [model, setModel] = useState('compound');
+  const [model, setModel] = useState('groq/compound');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ArchitectureReview | null>(null);

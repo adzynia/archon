@@ -118,7 +118,7 @@ Create a new architecture review.
 {
   "architectureText": "# My Architecture\n...",
   "repoUrl": "https://github.com/user/repo", // optional
-  "model": "compound" // optional (defaults to compound)
+  "model": "groq/compound" // optional (defaults to groq/compound)
 }
 ```
 
