@@ -1,0 +1,31 @@
+{
+  "name": "@archon/backend",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@archon/shared": "workspace:*",
+    "@fastify/cors": "^8.5.0",
+    "dotenv": "^17.2.3",
+    "fastify": "^4.25.2",
+    "groq-sdk": "^0.3.2",
+    "nanoid": "^5.0.4",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@vitest/ui": "^4.0.9",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.9"
+  }
+}
