@@ -12,7 +12,7 @@ An AI-powered architecture review tool that analyzes software architecture docum
 - **Tech Stack**:
   - Backend: Fastify + TypeScript
   - Frontend: Next.js 14 (App Router) + React
-  - LLM: Groq (fast inference with multiple models: Llama 3.3 70B, Llama 3.1 8B, Qwen3 32B, GPT-OSS 120B)
+  - LLM: Groq (fast inference with multiple models: Compound, Llama 3.3 70B, Llama 3.1 8B, Qwen3 32B, GPT-OSS 120B)
   - Monorepo: pnpm workspaces
 
 ## Project Structure
@@ -98,7 +98,8 @@ pnpm dev
 1. Open http://localhost:3000
 2. Paste your architecture document (Markdown format) into the textarea
 3. Select your preferred AI model (each has separate rate limits):
-   - **Llama 3.3 70B** - Default, fastest, most balanced
+   - **Groq Compound** - Default, best quality, multi-model routing
+   - **Llama 3.3 70B** - Fastest, most balanced
    - **Llama 3.1 8B** - Faster inference, smaller model
    - **Qwen3 32B** - Multilingual support
    - **GPT-OSS 120B** - Most capable model
@@ -117,7 +118,7 @@ Create a new architecture review.
 {
   "architectureText": "# My Architecture\n...",
   "repoUrl": "https://github.com/user/repo", // optional
-  "model": "llama-3.3-70b-versatile" // optional (defaults to llama-3.3-70b-versatile)
+  "model": "compound" // optional (defaults to compound)
 }
 ```
 

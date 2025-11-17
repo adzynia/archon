@@ -69,7 +69,8 @@ Microservices-based architecture handling 10,000 requests/day...
           className={styles.select}
           disabled={loading}
         >
-          <option value="llama-3.3-70b-versatile">Llama 3.3 70B (Default - Fastest)</option>
+          <option value="compound">Groq Compound (Default - Best Quality)</option>
+          <option value="llama-3.3-70b-versatile">Llama 3.3 70B (Fastest)</option>
           <option value="llama-3.1-8b-instant">Llama 3.1 8B (Fast & Efficient)</option>
           <option value="qwen/qwen3-32b">Qwen3 32B (Multilingual)</option>
           <option value="openai/gpt-oss-120b">GPT-OSS 120B (Most Capable)</option>

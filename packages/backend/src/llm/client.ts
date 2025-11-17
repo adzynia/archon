@@ -16,7 +16,7 @@ export class GroqLLMClient implements LLMClient {
   private client: Groq;
   private model: string;
 
-  constructor(apiKey: string, model: string = 'llama-3.3-70b-versatile') {
+  constructor(apiKey: string, model: string = 'compound') {
     this.client = new Groq({ apiKey });
     this.model = model;
   }
