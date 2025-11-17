@@ -31,7 +31,7 @@ app.register(reviewRoutes, { reviewService, storage });
 app.get('/health', async () => ({ status: 'ok' }));
 
 // Export for Vercel serverless
-export default async (req: any, res: any) => {
+export default async (req: unknown, res: unknown) => {
   await app.ready();
   app.server.emit('request', req, res);
 };

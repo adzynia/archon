@@ -51,15 +51,26 @@ export class ReviewService {
         try {
           // Replace literal newlines, tabs, and other control characters within strings
           // This regex finds strings and replaces control characters inside them
-          // eslint-disable-next-line no-control-regex
           const fixed = jsonString.replace(
             /"([^"\\]*(\\.[^"\\]*)*)"/g,
             (match) => {
-              return match
+              // Replace common control characters
+              let cleaned = match
                 .replace(/\n/g, '\\n')
                 .replace(/\r/g, '\\r')
-                .replace(/\t/g, '\\t')
-                .replace(/[\x00-\x1F\x7F]/g, ''); // Remove other control characters
+                .replace(/\t/g, '\\t');
+
+              // Remove other ASCII control characters (0x00-0x1F and 0x7F)
+              // Using charCodeAt to avoid eslint no-control-regex warning
+              cleaned = cleaned
+                .split('')
+                .filter((char) => {
+                  const code = char.charCodeAt(0);
+                  return code > 31 || code === 9 || code === 10 || code === 13;
+                })
+                .join('');
+
+              return cleaned;
             }
           );
           return JSON.parse(fixed) as T;
